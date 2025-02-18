@@ -1,8 +1,20 @@
+using Microsoft.EntityFrameworkCore;
+using StockTradingApi.Data;
+using Npgsql.EntityFrameworkCore.PostgreSQL;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+// Add services to the container.
+builder.Services.AddControllers();
+
+// Register the ApplicationDbContext with the PostgreSQL provider using the connection string from appsettings.json
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 
 var app = builder.Build();
 
